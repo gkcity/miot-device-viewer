@@ -1,0 +1,68 @@
+<nz-layout class="main-layout">
+  <nz-header class="fixed-header">
+    <div class="logo">
+      <img src="assets/mi.svg" alt="logo">
+    </div>
+
+    <!-- 大屏幕水平菜单：小屏幕隐藏 -->
+    <ul
+      nz-menu
+      nzTheme="dark"
+      nzMode="horizontal"
+      class="header-menu desktop-menu"
+    >
+      <li nz-menu-item nzMatchRouter routerLink="/main/product">
+        <span nz-icon nzType="bulb" nzTheme="outline"></span>
+        devices
+      </li>
+
+      <li nz-menu-item nzMatchRouter routerLink="/main/template">
+        <span nz-icon nzType="fire" nzTheme="outline"></span>
+        templates
+      </li>
+
+      <li nz-menu-item nzMatchRouter routerLink="/main/spec">
+        <span nz-icon nzType="gold" nzTheme="outline"></span>
+        specification
+      </li>
+    </ul>
+
+    <!-- 小屏幕汉堡按钮 + 下拉菜单 -->
+    <div class="mobile-menu-trigger">
+      <span>
+        <button
+          nz-button
+          nzType="text"
+          nzSize="large"
+          nz-dropdown
+          [nzDropdownMenu]="mobileMenu"
+          nzPlacement="bottomRight"
+        >
+          <span nz-icon nzType="menu" nzTheme="outline" style="color: white; font-size: 20px;"></span>
+        </button>
+      </span>
+    </div>
+  </nz-header>
+
+  <nz-content class="scrollable-content">
+    <router-outlet></router-outlet>
+  </nz-content>
+</nz-layout>
+
+<!-- 小屏幕下拉菜单 -->
+<nz-dropdown-menu #mobileMenu="nzDropdownMenu">
+  <ul nz-menu nzTheme="dark" nzMode="vertical">
+    <li nz-menu-item nzMatchRouter routerLink="/main/product">
+      <span nz-icon nzType="bulb" nzTheme="outline"></span>
+      产品
+    </li>
+    <li nz-menu-item nzMatchRouter routerLink="/main/template">
+      <span nz-icon nzType="fire" nzTheme="outline"></span>
+      产品模板
+    </li>
+    <li nz-menu-item nzMatchRouter routerLink="/main/spec">
+      <span nz-icon nzType="gold" nzTheme="outline"></span>
+      产品规范
+    </li>
+  </ul>
+</nz-dropdown-menu>
