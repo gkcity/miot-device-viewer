@@ -33,13 +33,13 @@ jobs:
 
       # 为 Angular 路由创建 404 回退
       - name: Create 404.html for client-side routing
-        run: cp dist/browser/index.html dist/browser/404.html
+        run: cp dist/miot-device-viewer/browser/index.html dist/miot-device-viewer/browser/404.html
 
       # 上传构建产物
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/browser
+          path: dist/miot-device-viewer/browser
 
   # 单独的部署任务（需要特殊权限）
   deploy:
