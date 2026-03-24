@@ -11,6 +11,7 @@ import en from '@angular/common/locales/en';
 import {FormsModule} from '@angular/forms';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
+// import { provideAngulartics2, withRouterTracking } from 'angulartics2';
 import {MyHttpInterceptor} from './service/interceptors/MyHttpInterceptor';
 
 registerLocaleData(en);
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes, withHashLocation()),
+    // provideAngulartics2(withRouterTracking()),
     provideNzIcons(icons),
     provideNzI18n(en_US),
     importProvidersFrom(FormsModule),
