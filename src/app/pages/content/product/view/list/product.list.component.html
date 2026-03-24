@@ -1,272 +1,313 @@
-<nz-row [nzGutter]="[8, 8]">
+<nz-spin [nzSpinning]="loading">
 
-  <nz-col nzSpan="24">
-    <nz-table
-      nzShowSizeChanger
-      nzSize="small"
-      nzBordered
-      [nzData]="products"
-      [nzFrontPagination]="false"
-      [nzLoading]="loading"
-      [nzTotal]="total"
-      [(nzPageSize)]="pageSize"
-      [(nzPageIndex)]="pageIndex"
-      [nzPageSizeOptions]="pageSizeOptions"
-      (nzQueryParams)="onQueryParamsChange($event)"
-    >
-      <thead>
-<!--      <tr>-->
-<!--        <th rowSpan="2">图标</th>-->
+  <nz-row [nzGutter]="[8, 8]">
+    <nz-col nzSpan="24">
+      <nz-table
+        #basicTable
+        nzSize="small"
+        nzBordered
+        nzShowPagination
+        nzShowSizeChanger
+        [nzData]="products"
+        [nzPageSize]="100"
+        [nzHideOnSinglePage]="false"
+      >
+        <thead>
+              <tr>
+                <th
+                  [nzSortFn]="categorySortFn"
+                  [nzFilters]="categoryFilters"
+                  [nzFilterFn]="categoryFilterFn"
+                >category</th>
 
-<!--        <th-->
-<!--          rowSpan="2"-->
-<!--          [nzSortFn]="typeSortFn"-->
-<!--        >型号</th>-->
+                <th
+                  [nzSortFn]="modelSortFn"
+                >model</th>
 
-<!--        <th-->
-<!--          rowSpan="2"-->
-<!--          [nzSortFn]="templateSortFn"-->
-<!--          [nzFilters]="templateFilters"-->
-<!--          [nzFilterFn]="templateFilterFn"-->
-<!--        >产品模板</th>-->
+                <th
+                  [nzSortFn]="typeSortFn"
+                >type</th>
 
-<!--        <th-->
-<!--          rowSpan="2"-->
-<!--          [nzSortFn]="typeSortFn"-->
-<!--          [nzFilters]="typeFilters"-->
-<!--          [nzFilterFn]="typeFilterFn"-->
-<!--        >设备类型</th>-->
+                <th
+                  [nzSortFn]="statusSortFn"
+                  [nzFilters]="statusFilters"
+                  [nzFilterFn]="statusFilterFn"
+                >status</th>
 
-<!--        @if (basicChecked) {-->
-<!--          <th colspan="4">-->
-<!--            基本信息-->
-<!--          </th>-->
-<!--        }-->
+                <th>version</th>
 
-<!--        @if (wizardChecked) {-->
-<!--          <th colspan="2">-->
-<!--            配网引导-->
-<!--          </th>-->
-<!--        }-->
+        <!--        <th-->
+        <!--          rowSpan="2"-->
+        <!--          [nzSortFn]="typeSortFn"-->
+        <!--        >型号</th>-->
 
-<!--        @if (instanceChecked) {-->
-<!--          <th colspan="2">-->
-<!--            功能-->
-<!--          </th>-->
-<!--        }-->
+        <!--        <th-->
+        <!--          rowSpan="2"-->
+        <!--          [nzSortFn]="templateSortFn"-->
+        <!--          [nzFilters]="templateFilters"-->
+        <!--          [nzFilterFn]="templateFilterFn"-->
+        <!--        >产品模板</th>-->
 
-<!--        @if (panelChecked) {-->
-<!--          <th colspan="2">-->
-<!--            控制页-->
-<!--          </th>-->
-<!--        }-->
+        <!--        <th-->
+        <!--          rowSpan="2"-->
+        <!--          [nzSortFn]="typeSortFn"-->
+        <!--          [nzFilters]="typeFilters"-->
+        <!--          [nzFilterFn]="typeFilterFn"-->
+        <!--        >设备类型</th>-->
 
-<!--        @if (firmwareChecked) {-->
-<!--          <th colspan="1" rowSpan="2">-->
-<!--            固件-->
-<!--          </th>-->
-<!--        }-->
+        <!--        @if (basicChecked) {-->
+        <!--          <th colspan="4">-->
+        <!--            基本信息-->
+        <!--          </th>-->
+        <!--        }-->
 
-<!--        @if (manualChecked) {-->
-<!--          <th colspan="1" rowSpan="2">-->
-<!--            说明书-->
-<!--          </th>-->
-<!--        }-->
+        <!--        @if (wizardChecked) {-->
+        <!--          <th colspan="2">-->
+        <!--            配网引导-->
+        <!--          </th>-->
+        <!--        }-->
 
-<!--        @if (visibilityChecked) {-->
-<!--          <th colspan="1" rowSpan="2">-->
-<!--            可见性-->
-<!--          </th>-->
-<!--        }-->
-<!--      </tr>-->
+        <!--        @if (instanceChecked) {-->
+        <!--          <th colspan="2">-->
+        <!--            功能-->
+        <!--          </th>-->
+        <!--        }-->
 
-<!--      <tr>-->
-<!--        @if (basicChecked) {-->
-<!--          <th-->
-<!--            [nzSortFn]="nameSortFn"-->
-<!--            nzCustomFilter-->
-<!--          >-->
-<!--            产品名称-->
-<!--            <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchNameValue.length > 0" [nzDropdownMenu]="menuSearchName">-->
-<!--              <span nz-icon nzType="search"></span>-->
-<!--            </nz-filter-trigger>-->
-<!--          </th>-->
+        <!--        @if (panelChecked) {-->
+        <!--          <th colspan="2">-->
+        <!--            控制页-->
+        <!--          </th>-->
+        <!--        }-->
 
-<!--          <th-->
-<!--            [nzSortFn]="protocolSortFn"-->
-<!--            [nzFilters]="protocolFilters"-->
-<!--            [nzFilterFn]="protocolFilterFn"-->
-<!--          >连接方式</th>-->
+        <!--        @if (firmwareChecked) {-->
+        <!--          <th colspan="1" rowSpan="2">-->
+        <!--            固件-->
+        <!--          </th>-->
+        <!--        }-->
 
-<!--          <th-->
-<!--            [nzSortFn]="upgradeSortFn"-->
-<!--            [nzFilters]="upgradeFilters"-->
-<!--            [nzFilterFn]="upgradeFilterFn"-->
-<!--          >固件升级</th>-->
+        <!--        @if (manualChecked) {-->
+        <!--          <th colspan="1" rowSpan="2">-->
+        <!--            说明书-->
+        <!--          </th>-->
+        <!--        }-->
 
-<!--          <th-->
-<!--            [nzSortFn]="basicLifecycleSortFn"-->
-<!--            [nzFilters]="basicLifecycleFilters"-->
-<!--            [nzFilterFn]="basicLifecycleFilterFn"-->
-<!--          >状态</th>-->
-<!--        }-->
+        <!--        @if (visibilityChecked) {-->
+        <!--          <th colspan="1" rowSpan="2">-->
+        <!--            可见性-->
+        <!--          </th>-->
+        <!--        }-->
+        <!--      </tr>-->
 
-<!--        &lt;!&ndash;      <th>操作</th>&ndash;&gt;-->
-<!--        @if (wizardChecked) {-->
-<!--          <th>步骤</th>-->
-<!--          <th>状态</th>-->
-<!--        }-->
+        <!--      <tr>-->
+        <!--        @if (basicChecked) {-->
+        <!--          <th-->
+        <!--            [nzSortFn]="nameSortFn"-->
+        <!--            nzCustomFilter-->
+        <!--          >-->
+        <!--            产品名称-->
+        <!--            <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchNameValue.length > 0" [nzDropdownMenu]="menuSearchName">-->
+        <!--              <span nz-icon nzType="search"></span>-->
+        <!--            </nz-filter-trigger>-->
+        <!--          </th>-->
 
-<!--        @if (instanceChecked) {-->
-<!--          <th>版本</th>-->
-<!--          <th>状态</th>-->
-<!--        }-->
+        <!--          <th-->
+        <!--            [nzSortFn]="protocolSortFn"-->
+        <!--            [nzFilters]="protocolFilters"-->
+        <!--            [nzFilterFn]="protocolFilterFn"-->
+        <!--          >连接方式</th>-->
 
-<!--        @if (panelChecked) {-->
-<!--          <th>版本</th>-->
-<!--          <th>状态</th>-->
-<!--        }-->
-<!--      </tr>-->
-      </thead>
-      <tbody>
-<!--        @for (p of products; track p.basic.id) {-->
-<!--          <tr>-->
-<!--            <td nzAlign="center"><img nz-image [nzSrc]="p.basic.icon" width="64" height="64"></td>-->
-<!--            <td><a routerLink="/main/product/detail/{{p.basic.id}}">{{ p.basic.model }}</a>-->
-<!--            <td><a> {{ p.basic.template.name }}</a></td>-->
-<!--            <td>{{ p.basic.template.name }}</td>-->
+        <!--          <th-->
+        <!--            [nzSortFn]="upgradeSortFn"-->
+        <!--            [nzFilters]="upgradeFilters"-->
+        <!--            [nzFilterFn]="upgradeFilterFn"-->
+        <!--          >固件升级</th>-->
 
-<!--            @if (basicChecked) {-->
-<!--              <td><a routerLink="/main/product/detail/{{p.basic.id}}">{{ p.basic.name }}</a></td>-->
-<!--              <td>{{ p.basic.protocol }}</td>-->
-<!--              <td>-->
-<!--                @for (item of p.basic.upgrade; track item) {-->
-<!--                  @switch (item) {-->
-<!--                    @case ('Direct') {-->
-<!--                      直接升级-->
-<!--                    }-->
-<!--                    @case ('Gateway') {-->
-<!--                      网关协助-->
-<!--                    }-->
-<!--                    @case ('Ble') {-->
-<!--                      蓝牙协助-->
-<!--                    }-->
-<!--                  }-->
-<!--                }-->
-<!--              </td>-->
-<!--              <td>-->
-<!--                @switch (p.basic.lifecycle) {-->
-<!--                  @case (LifeCycle.DEVELOPMENT) {-->
-<!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.PREVIEW) {-->
-<!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.RELEASED) {-->
-<!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
-<!--                  }-->
-<!--                }-->
-<!--              </td>-->
-<!--            }-->
+        <!--          <th-->
+        <!--            [nzSortFn]="basicLifecycleSortFn"-->
+        <!--            [nzFilters]="basicLifecycleFilters"-->
+        <!--            [nzFilterFn]="basicLifecycleFilterFn"-->
+        <!--          >状态</th>-->
+        <!--        }-->
 
-<!--            @if (wizardChecked) {-->
-<!--              <td>-->
-<!--                {{ p.wizard.steps.length }}-->
-<!--              </td>-->
-<!--              <td>-->
-<!--                @switch (p.wizard.lifecycle) {-->
-<!--                  @case (LifeCycle.DEVELOPMENT) {-->
-<!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.PREVIEW) {-->
-<!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.RELEASED) {-->
-<!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
-<!--                  }-->
-<!--                }-->
-<!--              </td>-->
-<!--            }-->
+        <!--        &lt;!&ndash;      <th>操作</th>&ndash;&gt;-->
+        <!--        @if (wizardChecked) {-->
+        <!--          <th>步骤</th>-->
+        <!--          <th>状态</th>-->
+        <!--        }-->
 
-<!--            @if (instanceChecked) {-->
-<!--              <td>-->
-<!--                {{ p.CurrentInstance.type?.version }}-->
-<!--              </td>-->
-<!--              <td>-->
-<!--                @switch (p.CurrentInstance.lifecycle) {-->
-<!--                  @case (LifeCycle.DEVELOPMENT) {-->
-<!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.PREVIEW) {-->
-<!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.RELEASED) {-->
-<!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
-<!--                  }-->
-<!--                }-->
-<!--              </td>-->
-<!--            }-->
+        <!--        @if (instanceChecked) {-->
+        <!--          <th>版本</th>-->
+        <!--          <th>状态</th>-->
+        <!--        }-->
 
-<!--            @if (panelChecked) {-->
-<!--              <td>-->
-<!--                {{ p.CurrentPanel.version.code }}-->
-<!--              </td>-->
-<!--              <td>-->
-<!--                @switch (p.CurrentPanel.lifecycle) {-->
-<!--                  @case (LifeCycle.DEVELOPMENT) {-->
-<!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.PREVIEW) {-->
-<!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.RELEASED) {-->
-<!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
-<!--                  }-->
-<!--                }-->
-<!--              </td>-->
-<!--            }-->
+        <!--        @if (panelChecked) {-->
+        <!--          <th>版本</th>-->
+        <!--          <th>状态</th>-->
+        <!--        }-->
+              </tr>
+        </thead>
+        <tbody>
+          @for (p of basicTable.data; track p.type.toString()) {
+            <tr>
+              <td>{{ p.type.name }}</td>
+              <td>{{ p.type.v2modified }}</td>
+              <td>{{ p.type.toString() }}</td>
+              <td>
+                @switch (p.status) {
+                  @case ('debug') {
+                    <nz-tag nzColor="red">development</nz-tag>
+                  }
+                  @case ('preview') {
+                    <nz-tag nzColor="blue">preview</nz-tag>
+                  }
+                  @case ('released') {
+                    <nz-tag nzColor="green">released</nz-tag>
+                  }
+                }
+              </td>
+              <td>{{ p.version }}</td>
+            </tr>
+          }
 
-<!--            @if (firmwareChecked) {-->
-<!--              <td>-->
-<!--                {{ p.firmwares.length }}-->
-<!--              </td>-->
-<!--            }-->
+        <!--        @for (p of products; track p.basic.id) {-->
+        <!--          <tr>-->
+        <!--            <td nzAlign="center"><img nz-image [nzSrc]="p.basic.icon" width="64" height="64"></td>-->
+        <!--            <td><a routerLink="/main/product/detail/{{p.basic.id}}">{{ p.basic.model }}</a>-->
+        <!--            <td><a> {{ p.basic.template.name }}</a></td>-->
+        <!--            <td>{{ p.basic.template.name }}</td>-->
 
-<!--            @if (manualChecked) {-->
-<!--              <td>-->
-<!--                @switch (p.manual.lifecycle) {-->
-<!--                  @case (LifeCycle.DEVELOPMENT) {-->
-<!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.PREVIEW) {-->
-<!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
-<!--                  }-->
-<!--                  @case (LifeCycle.RELEASED) {-->
-<!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
-<!--                  }-->
-<!--                }-->
-<!--              </td>-->
-<!--            }-->
+        <!--            @if (basicChecked) {-->
+        <!--              <td><a routerLink="/main/product/detail/{{p.basic.id}}">{{ p.basic.name }}</a></td>-->
+        <!--              <td>{{ p.basic.protocol }}</td>-->
+        <!--              <td>-->
+        <!--                @for (item of p.basic.upgrade; track item) {-->
+        <!--                  @switch (item) {-->
+        <!--                    @case ('Direct') {-->
+        <!--                      直接升级-->
+        <!--                    }-->
+        <!--                    @case ('Gateway') {-->
+        <!--                      网关协助-->
+        <!--                    }-->
+        <!--                    @case ('Ble') {-->
+        <!--                      蓝牙协助-->
+        <!--                    }-->
+        <!--                  }-->
+        <!--                }-->
+        <!--              </td>-->
+        <!--              <td>-->
+        <!--                @switch (p.basic.lifecycle) {-->
+        <!--                  @case (LifeCycle.DEVELOPMENT) {-->
+        <!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.PREVIEW) {-->
+        <!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.RELEASED) {-->
+        <!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
+        <!--                  }-->
+        <!--                }-->
+        <!--              </td>-->
+        <!--            }-->
 
-<!--            @if (visibilityChecked) {-->
-<!--              <td>-->
-<!--                所有应用可见-->
-<!--              </td>-->
-<!--            }-->
-<!--          </tr>-->
-<!--        }-->
-      </tbody>
+        <!--            @if (wizardChecked) {-->
+        <!--              <td>-->
+        <!--                {{ p.wizard.steps.length }}-->
+        <!--              </td>-->
+        <!--              <td>-->
+        <!--                @switch (p.wizard.lifecycle) {-->
+        <!--                  @case (LifeCycle.DEVELOPMENT) {-->
+        <!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.PREVIEW) {-->
+        <!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.RELEASED) {-->
+        <!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
+        <!--                  }-->
+        <!--                }-->
+        <!--              </td>-->
+        <!--            }-->
 
-<!--      <nz-dropdown-menu #menuSearchName="nzDropdownMenu">-->
-<!--        <div class="ant-table-filter-dropdown">-->
-<!--          <div class="search-box">-->
-<!--&lt;!&ndash;            <input type="text" nz-input placeholder="请输入产品名称" [(ngModel)]="searchNameValue" />&ndash;&gt;-->
-<!--            <button nz-button nzSize="small" nzType="primary" (click)="searchName()" class="search-button">搜索</button>-->
-<!--            <button nz-button nzSize="small" (click)="resetName()">复位</button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </nz-dropdown-menu>-->
-    </nz-table>
-  </nz-col>
+        <!--            @if (instanceChecked) {-->
+        <!--              <td>-->
+        <!--                {{ p.CurrentInstance.type?.version }}-->
+        <!--              </td>-->
+        <!--              <td>-->
+        <!--                @switch (p.CurrentInstance.lifecycle) {-->
+        <!--                  @case (LifeCycle.DEVELOPMENT) {-->
+        <!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.PREVIEW) {-->
+        <!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.RELEASED) {-->
+        <!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
+        <!--                  }-->
+        <!--                }-->
+        <!--              </td>-->
+        <!--            }-->
 
-</nz-row>
+        <!--            @if (panelChecked) {-->
+        <!--              <td>-->
+        <!--                {{ p.CurrentPanel.version.code }}-->
+        <!--              </td>-->
+        <!--              <td>-->
+        <!--                @switch (p.CurrentPanel.lifecycle) {-->
+        <!--                  @case (LifeCycle.DEVELOPMENT) {-->
+        <!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.PREVIEW) {-->
+        <!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.RELEASED) {-->
+        <!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
+        <!--                  }-->
+        <!--                }-->
+        <!--              </td>-->
+        <!--            }-->
+
+        <!--            @if (firmwareChecked) {-->
+        <!--              <td>-->
+        <!--                {{ p.firmwares.length }}-->
+        <!--              </td>-->
+        <!--            }-->
+
+        <!--            @if (manualChecked) {-->
+        <!--              <td>-->
+        <!--                @switch (p.manual.lifecycle) {-->
+        <!--                  @case (LifeCycle.DEVELOPMENT) {-->
+        <!--                    <nz-tag nzColor="red">开发中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.PREVIEW) {-->
+        <!--                    <nz-tag nzColor="blue">上线中</nz-tag>-->
+        <!--                  }-->
+        <!--                  @case (LifeCycle.RELEASED) {-->
+        <!--                    <nz-tag nzColor="green">已上线</nz-tag>-->
+        <!--                  }-->
+        <!--                }-->
+        <!--              </td>-->
+        <!--            }-->
+
+        <!--            @if (visibilityChecked) {-->
+        <!--              <td>-->
+        <!--                所有应用可见-->
+        <!--              </td>-->
+        <!--            }-->
+        <!--          </tr>-->
+        <!--        }-->
+        </tbody>
+
+        <!--      <nz-dropdown-menu #menuSearchName="nzDropdownMenu">-->
+        <!--        <div class="ant-table-filter-dropdown">-->
+        <!--          <div class="search-box">-->
+        <!--&lt;!&ndash;            <input type="text" nz-input placeholder="请输入产品名称" [(ngModel)]="searchNameValue" />&ndash;&gt;-->
+        <!--            <button nz-button nzSize="small" nzType="primary" (click)="searchName()" class="search-button">搜索</button>-->
+        <!--            <button nz-button nzSize="small" (click)="resetName()">复位</button>-->
+        <!--          </div>-->
+        <!--        </div>-->
+        <!--      </nz-dropdown-menu>-->
+      </nz-table>
+    </nz-col>
+
+  </nz-row>
+</nz-spin>

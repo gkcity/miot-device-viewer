@@ -35,31 +35,31 @@ import {RouterLink} from '@angular/router';
 })
 export class ProductComponent {
 
-  viewOptions: NzSegmentedOptions = [
-    {value: 'Card', icon: 'appstore'},
-    {value: 'List', icon: 'bars'}
-  ];
-  viewMode: number = 0;
+  // viewOptions: NzSegmentedOptions = [
+  //   {value: 'Card', icon: 'appstore'},
+  //   {value: 'List', icon: 'bars'}
+  // ];
+  // viewMode: number = 0;
 
   constructor(
     private service: MainService,
     private msg: NzMessageService,
   ) {
-    this.loadProductViewMode();
+    // this.loadProductViewMode();
   }
 
-  protected onViewModeChanged($event: any) {
-    this.saveProductViewMode();
-  }
-
-  private loadProductViewMode() {
-    const value = localStorage.getItem('productViewMode');
-    if (value) {
-      this.viewMode = Number.parseInt(value);
-    }
-  }
-
-  private saveProductViewMode() {
-    localStorage.setItem('productViewMode', this.viewMode.toString());
-  }
+  // protected onViewModeChanged($event: any) {
+  //   this.saveProductViewMode();
+  // }
+  //
+  // private loadProductViewMode() {
+  //   const value = localStorage.getItem('productViewMode');
+  //   if (value) {
+  //     this.viewMode = Number.parseInt(value);
+  //   }
+  // }
+  //
+  // private saveProductViewMode() {
+  //   localStorage.setItem('productViewMode', this.viewMode.toString());
+  // }
 }

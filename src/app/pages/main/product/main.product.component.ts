@@ -48,7 +48,7 @@ export class MainProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.load();
+    // this.load();
   }
 
   private load() {

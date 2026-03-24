@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NzTableFilterFn, NzTableModule, NzTableQueryParams, NzTableSortFn} from 'ng-zorro-antd/table';
+import {NzTableFilterFn, NzTableModule, NzTableSortFn} from 'ng-zorro-antd/table';
 import {RouterLink} from '@angular/router';
 import {NzDividerModule} from 'ng-zorro-antd/divider';
-import {LifeCycle, Product} from 'xiot-core-spec-ts';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzImageModule} from 'ng-zorro-antd/image';
 import {NzTagModule} from 'ng-zorro-antd/tag';
@@ -16,6 +15,12 @@ import {NzCardModule} from 'ng-zorro-antd/card';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {MainService} from '../../../../../service/main.service';
 import {MyProduct} from '../../../../../typedef/define/product/MyProduct';
+import {NzSpinModule} from 'ng-zorro-antd/spin';
+
+interface CategoryFilter {
+  text: string,
+  value: string
+}
 
 @Component({
   selector: 'product-list',
@@ -36,86 +41,40 @@ import {MyProduct} from '../../../../../typedef/define/product/MyProduct';
     NzColDirective,
     NzRowDirective,
     NzCardModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzSpinModule,
   ],
 })
 export class ProductListComponent implements OnInit, OnDestroy {
 
-  // private subscription: any;
-
-  basicChecked: boolean = true;
-  wizardChecked: boolean = true;
-  instanceChecked: boolean = true;
-  panelChecked: boolean = true;
-  firmwareChecked: boolean = true;
-  manualChecked: boolean = true;
-  visibilityChecked: boolean = false;
-
   loading: boolean = true;
-  total: number = 0;
   products: MyProduct[] = [];
-  pageSize = 100;
-  pageIndex = 1;
-  pageSizeOptions = [10, 50, 100, 200, 500];
 
-  // nameSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.name.localeCompare(b.name);
-  // searchNameValue = '';
-  // visible = false;
-  //
-  // typeSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.name.localeCompare(b.name);
-  // typeFilters = [
-  //   {
-  //     text: 'aaa', value: "a"
-  //   },
-  //   {
-  //     text: 'bbb', value: "b"
-  //   }
-  // ]
-  // typeFilterFn: NzTableFilterFn<MyProduct> = (list: string[], a: MyProduct) => list.some(name => a.name.includes(name));
-  //
-  // protocolSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.name.localeCompare(b.name);
-  // protocolFilters = [
-  //   {
-  //     text: 'aaa', value: "a"
-  //   },
-  //   {
-  //     text: 'bbb', value: "b"
-  //   }
-  // ]
-  // protocolFilterFn: NzTableFilterFn<MyProduct> = (list: string[], a: MyProduct) => list.some(name => a.name.includes(name));
-  //
-  // upgradeSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.name.localeCompare(b.name);
-  // upgradeFilters = [
-  //   {
-  //     text: 'aaa', value: "a"
-  //   },
-  //   {
-  //     text: 'bbb', value: "b"
-  //   }
-  // ]
-  // upgradeFilterFn: NzTableFilterFn<MyProduct> = (list: string[], a: MyProduct) => list.some(name => a.name.includes(name));
-  //
-  // templateSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.name.localeCompare(b.name);
-  // templateFilters = [
-  //   {
-  //     text: 'aaa', value: "a"
-  //   },
-  //   {
-  //     text: 'bbb', value: "b"
-  //   }
-  // ]
-  // templateFilterFn: NzTableFilterFn<MyProduct> = (list: string[], a: MyProduct) => list.some(name => a.name.includes(name));
-  //
-  // basicLifecycleSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.name.localeCompare(b.name);
-  // basicLifecycleFilters = [
-  //   {
-  //     text: 'aaa', value: "a"
-  //   },
-  //   {
-  //     text: 'bbb', value: "b"
-  //   }
-  // ]
-  // basicLifecycleFilterFn: NzTableFilterFn<MyProduct> = (list: string[], a: MyProduct) => list.some(name => a.name.includes(name));
+  categorySortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.type.name.localeCompare(b.type.name);
+  categoryFilters: CategoryFilter[] = [
+    {
+      text: 'development', value: "development"
+    }
+  ];
+  categoryFilterFn: NzTableFilterFn<MyProduct> = (list: string[], a: MyProduct) => list.some(name => a.type.name.includes(name));
+
+  modelSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.type.v2modified.localeCompare(b.type.v2modified);
+
+  typeSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.type.toString().localeCompare(b.type.toString());
+
+  statusSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.status.localeCompare(b.status);
+  statusFilters = [
+    {
+      text: 'development', value: "debug"
+    },
+    {
+      text: 'preview', value: "preview"
+    },
+    {
+      text: 'released', value: "released"
+    }
+  ]
+  statusFilterFn: NzTableFilterFn<MyProduct> = (list: string[], a: MyProduct) => list.some(name => a.status.includes(name));
 
   constructor(
     private service: MainService,
@@ -124,52 +83,36 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.loadMyProductsFromServer(this.pageIndex, this.pageSize);
-    // 无需加载，因为onQueryParamsChange会被触发。
-
-    // this.subscription = this.organization.data$.subscribe(data => {
-    //   if (data) {
-    //     this.loadMyProductsFromServer(this.pageIndex, this.pageSize);
-    //   }
-    // });
+    this.loadProductsFromServer();
   }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
   }
 
-  loadMyProductsFromServer(
-    pageIndex: number,
-    pageSize: number,
-  ) {
+  loadProductsFromServer() {
     this.loading = true;
-    // this.service.getFullMyProducts(this.organization.code.value, pageIndex, pageSize).subscribe({
-    //   next: data => {
-    //     this.total = data.page.total;
-    //     this.products = data.list;
-    //     this.loading = false;
-    //   },
-    //   error: error => {
-    //     this.msg.warning('Failed to getMyProducts', error);
-    //   }
-    // })
-  }
+    this.service.getProducts().subscribe({
+      next: data => {
+        this.products = data;
 
-  onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
-    const { pageSize, pageIndex } = params;
-    this.loadMyProductsFromServer(pageIndex, pageSize);
-  }
+        const newFilters: CategoryFilter[] = [];
+        const map: Map<String, String> = new Map<String, String>();
+        for (let product of this.products) {
+          if (! map.has(product.type.name)) {
+            map.set(product.type.name, product.type.name);
 
-  resetName(): void {
-    // this.searchNameValue = '';
-    // this.searchName();
-  }
+            newFilters.push({ text: product.type.name, value: product.type.name })
+          }
+        }
 
-  searchName(): void {
-    // this.visible = false;
-    // this.listOfDisplayData = this.listOfData.filter((item: DataItem) => item.name.indexOf(this.searchValue) !== -1);
-  }
+        this.categoryFilters = this.categoryFilters.concat(newFilters);
 
-  protected readonly LifeCycle = LifeCycle;
+        console.log('categoryFilters.size: ' + this.categoryFilters.length);
+        this.loading = false;
+      },
+      error: error => {
+        this.msg.warning('Failed to getProducts', error);
+      }
+    })
+  }
 }

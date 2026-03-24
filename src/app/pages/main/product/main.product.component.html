@@ -1,27 +1,27 @@
 <nz-layout>
-  <nz-sider nzWidth="200px" nzTheme="light">
-      <ul nz-menu nzMode="inline" class="menu" [nzInlineIndent]="12" [nzInlineCollapsed]="false">
-        <nz-spin [nzSpinning]="loading">
-          @for (item of products | keyvalue; track item.key) {
-            <li
-              nz-submenu
-              [nzTitle]="item.key"
-              [nzOpen]="getMenuState(item.key)"
-              (nzOpenChange)="onMenuOpenChange(item.key, $event)"
-            >
-              @for (p of item.value; track p) {
-                <li nz-menu-item class="menu-item" nzMatchRouter [routerLink]="['/main/product/detail', p.type.toString()]">
-                  <div class="menu-item-content">
-                    <!--                <span class="menu-icon"><img [src]="p.icon" width="32" height="32"></span>-->
-                    <span class="menu-text">{{ p.type.v2modified }}</span>
-                  </div>
-                </li>
-              }
-            </li>
-          }
-        </nz-spin>
-      </ul>
-  </nz-sider>
+<!--  <nz-sider nzWidth="200px" nzTheme="light">-->
+<!--      <ul nz-menu nzMode="inline" class="menu" [nzInlineIndent]="12" [nzInlineCollapsed]="false">-->
+<!--        <nz-spin [nzSpinning]="loading">-->
+<!--          @for (item of products | keyvalue; track item.key) {-->
+<!--            <li-->
+<!--              nz-submenu-->
+<!--              [nzTitle]="item.key"-->
+<!--              [nzOpen]="getMenuState(item.key)"-->
+<!--              (nzOpenChange)="onMenuOpenChange(item.key, $event)"-->
+<!--            >-->
+<!--              @for (p of item.value; track p) {-->
+<!--                <li nz-menu-item class="menu-item" nzMatchRouter [routerLink]="['/main/product/detail', p.type.toString()]">-->
+<!--                  <div class="menu-item-content">-->
+<!--                    &lt;!&ndash;                <span class="menu-icon"><img [src]="p.icon" width="32" height="32"></span>&ndash;&gt;-->
+<!--                    <span class="menu-text">{{ p.type.v2modified }}</span>-->
+<!--                  </div>-->
+<!--                </li>-->
+<!--              }-->
+<!--            </li>-->
+<!--          }-->
+<!--        </nz-spin>-->
+<!--      </ul>-->
+<!--  </nz-sider>-->
 
   <nz-layout class="inner-layout">
     <nz-content>
