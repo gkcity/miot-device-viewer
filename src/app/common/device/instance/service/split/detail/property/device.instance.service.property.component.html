@@ -4,19 +4,19 @@
   <div class="title-bar">
     <nz-space class="title">
       <span *nzSpaceItem><span nz-icon nzType="setting" nzTheme="outline"></span></span>
-      <span *nzSpaceItem>属性详情</span>
+      <span *nzSpaceItem>Property Detail</span>
     </nz-space>
 
     @if (lifecycle === LifeCycle.DEVELOPMENT) {
       <span style="float: right">
-        <button nz-button nzType="primary" nzDanger nzSize="small" (click)="onRemoved()">删除</button>
+        <button nz-button nzType="primary" nzDanger nzSize="small" (click)="onRemoved()">Remove</button>
       </span>
     }
   </div>
 
   <form class="content" nz-form [formGroup]="form">
     <nz-form-item nz-flex>
-      <nz-form-label [style.width.px]="120" nzRequired>实例ID</nz-form-label>
+      <nz-form-label [style.width.px]="120" nzRequired>Instance ID</nz-form-label>
       <nz-form-control>
         <device-instance-id
           formControlName="iid"
@@ -27,14 +27,14 @@
     </nz-form-item>
 
     <nz-form-item nz-flex>
-      <nz-form-label [style.width.px]="120" nzRequired>名字空间</nz-form-label>
+      <nz-form-label [style.width.px]="120" nzRequired>Namespace</nz-form-label>
       <nz-form-control>
         <device-instance-namespace formControlName="ns"></device-instance-namespace>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item nz-flex>
-      <nz-form-label [style.width.px]="120" nzRequired>代码</nz-form-label>
+      <nz-form-label [style.width.px]="120" nzRequired>Symbol</nz-form-label>
       <nz-form-control>
         <device-instance-name
           formControlName="code"
@@ -46,7 +46,7 @@
     </nz-form-item>
 
     <nz-form-item nz-flex>
-      <nz-form-label [style.width.px]="120" nzRequired>描述</nz-form-label>
+      <nz-form-label [style.width.px]="120" nzRequired>Description</nz-form-label>
       <nz-form-control>
         <device-instance-description
           formControlName="description"
@@ -57,7 +57,7 @@
     </nz-form-item>
 
     <nz-form-item nz-flex>
-      <nz-form-label [style.width.px]="120" nzRequired>访问方式</nz-form-label>
+      <nz-form-label [style.width.px]="120" nzRequired>Access</nz-form-label>
       <nz-form-control>
         <device-instance-service-property-access
           formControlName="access"
@@ -68,7 +68,7 @@
     </nz-form-item>
 
     <nz-form-item nz-flex>
-      <nz-form-label [style.width.px]="120" nzRequired>数据格式</nz-form-label>
+      <nz-form-label [style.width.px]="120" nzRequired>Data Format</nz-form-label>
       <nz-form-control>
         <device-instance-service-property-format
           formControlName="format"
@@ -80,7 +80,7 @@
 
     @if (constrainable) {
       <nz-form-item nz-flex>
-        <nz-form-label [style.width.px]="120" nzRequired>取值约束</nz-form-label>
+        <nz-form-label [style.width.px]="120" nzRequired>Value Constraint</nz-form-label>
         <nz-form-control>
           <device-instance-service-property-constraint
             formControlName="constraint"
@@ -93,7 +93,7 @@
       @switch (form.controls.constraint.value) {
         @case (ConstraintType.RANGE) {
           <nz-form-item nz-flex>
-            <nz-form-label [style.width.px]="120" nzRequired>取值范围</nz-form-label>
+            <nz-form-label [style.width.px]="120" nzRequired>Value Range</nz-form-label>
             <nz-form-control>
               <device-instance-service-property-range
                 formControlName="range"
@@ -105,7 +105,7 @@
         }
         @case (ConstraintType.LIST) {
           <nz-form-item nz-flex>
-            <nz-form-label [style.width.px]="120" nzRequired>取值列表</nz-form-label>
+            <nz-form-label [style.width.px]="120" nzRequired>Value List</nz-form-label>
             <nz-form-control>
               <device-instance-service-property-list
                 formControlName="list"
@@ -120,7 +120,7 @@
 
     @if (combinationValue) {
       <nz-form-item nz-flex>
-        <nz-form-label [style.width.px]="120" nzRequired>成员列表</nz-form-label>
+        <nz-form-label [style.width.px]="120" nzRequired>Members</nz-form-label>
         <nz-form-control>
           <device-instance-service-property-members
             formControlName="members"
@@ -137,7 +137,7 @@
     @if (property) {
       @if (property.formatNumber()) {
         <nz-form-item nz-flex>
-          <nz-form-label [style.width.px]="120" nzRequired>单位</nz-form-label>
+          <nz-form-label [style.width.px]="120" nzRequired>Unit</nz-form-label>
           <nz-form-control>
             <device-instance-service-property-unit
               formControlName="unit"
@@ -148,19 +148,19 @@
         </nz-form-item>
       }
 
-      @if (property.format !== DataFormat.COMBINATION) {
-        <nz-form-item nz-flex>
-          <nz-form-label [style.width.px]="120" nzRequired>缺省值</nz-form-label>
-          <nz-form-control>
-            <device-instance-service-property-default-value
-              formControlName="defaultValue"
-              [property]="property"
-              [lifecycle]="lifecycle"
-              (changed)="onDefaultValueChanged()"
-            ></device-instance-service-property-default-value>
-          </nz-form-control>
-        </nz-form-item>
-      }
+<!--      @if (property.format !== DataFormat.COMBINATION) {-->
+<!--        <nz-form-item nz-flex>-->
+<!--          <nz-form-label [style.width.px]="120" nzRequired>Default Value</nz-form-label>-->
+<!--          <nz-form-control>-->
+<!--            <device-instance-service-property-default-value-->
+<!--              formControlName="defaultValue"-->
+<!--              [property]="property"-->
+<!--              [lifecycle]="lifecycle"-->
+<!--              (changed)="onDefaultValueChanged()"-->
+<!--            ></device-instance-service-property-default-value>-->
+<!--          </nz-form-control>-->
+<!--        </nz-form-item>-->
+<!--      }-->
     }
   </form>
 </nz-card>

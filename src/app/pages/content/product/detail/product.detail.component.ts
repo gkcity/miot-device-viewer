@@ -11,7 +11,7 @@ import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NzTabsModule} from 'ng-zorro-antd/tabs';
-import {ObjectWithLifecycle, DeviceInstance, Product, Urn, UrnType} from 'xiot-core-spec-ts';
+import {DeviceInstance, DeviceInstanceCodec} from 'xiot-core-spec-ts';
 import {MainService} from '../../../../service/main.service';
 import {NzSpaceModule} from 'ng-zorro-antd/space';
 import {NzTagModule} from 'ng-zorro-antd/tag';
@@ -41,9 +41,8 @@ import {ProductInstanceComponent} from './instance/product.instance.component';
 export class ProductDetailComponent implements OnInit {
 
   loading: boolean = true;
-  productId: number = 0;
-  product: Product = new Product();
-  instances: ObjectWithLifecycle<DeviceInstance>[] = [];
+  type: string = '';
+  instance!: DeviceInstance;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,20 +54,20 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.productId = params['productId'];
-      this.load(this.productId);
+      this.type = params['type'];
+      this.load(this.type);
     });
   }
 
-  private load(productId: number): void {
+  private load(type: string): void {
     this.loading = true;
-    this.service.getProduct(productId).subscribe({
+    this.service.getProductInstance(type).subscribe({
       next: data => {
-        this.product = data;
+        this.instance = data;
         this.loading = false;
       },
       error: error => {
-        this.msg.warning('Failed to getProduct', error);
+        this.msg.warning('Failed to getProductInstance', error);
       }
     });
   }
@@ -77,7 +76,29 @@ export class ProductDetailComponent implements OnInit {
     this.router.navigate(['/main/product']).then(() => {});
   }
 
-  protected onSaved() {
-    this.load(this.productId);
+  protected onDownload() {
+    if (this.instance) {
+      const data = DeviceInstanceCodec.encode(this.instance);
+
+      // 1. 将数据转换为 JSON 字符串
+      const jsonString = JSON.stringify(data, null, 2); // 第三个参数是缩进空格数
+
+      // 2. 创建 Blob 对象
+      const blob = new Blob([jsonString], { type: 'application/json' });
+
+      // 3. 创建下载链接
+      const url = window.URL.createObjectURL(blob);
+
+      // 4. 创建临时链接元素
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `data-${new Date().getTime()}.json`; // 设置文件名
+
+      // 5. 触发点击下载
+      link.click();
+
+      // 6. 清理 URL 对象
+      window.URL.revokeObjectURL(url);
+    }
   }
 }

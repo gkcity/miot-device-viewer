@@ -1,16 +1,26 @@
 <nz-spin [nzSpinning]="loading">
   <nz-page-header (nzBack)="onBack()" nzBackIcon [nzTitle]="productTitle" [nzSubtitle]="productModel" [nzGhost]="false" class="fixed-header">
+
+    <nz-page-header-extra>
+      <button nz-button nzType="primary" (click)="onDownload()">Download</button>
+    </nz-page-header-extra>
   </nz-page-header>
 
   <ng-template #productTitle>
-    {{ product.name }}
+    @if (instance) {
+      {{ instance.description.get('zh-CN') || instance.description.get('en-US')}}
+    }
   </ng-template>
 
   <ng-template #productModel>
-    型号: {{ product.model }}
+    @if (instance) {
+      {{ instance.type.v2modified }}
+    }
   </ng-template>
 
-  <div style="padding: 20px 20px; margin-top: 110px;">
-<!--    <product-instance [product]="product"></product-instance>-->
+  <div style="padding: 20px 20px; margin-top: 64px;">
+    @if (instance) {
+      <product-instance [device]="instance"></product-instance>
+    }
   </div>
 </nz-spin>

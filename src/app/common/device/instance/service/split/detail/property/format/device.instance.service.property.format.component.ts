@@ -46,19 +46,19 @@ export class DeviceInstanceServicePropertyFormatComponent implements ControlValu
 
 // 使用 readonly 确保 formats 不会被修改
   readonly formats: Array<{ value: DataFormat, label: string }> = [
-    { value: DataFormat.BOOL, label: '布尔值' },
-    { value: DataFormat.UINT8, label: '无符号8位整型' },
-    { value: DataFormat.UINT16, label: '无符号16位整型' },
-    { value: DataFormat.UINT32, label: '无符号32位整型' },
-    { value: DataFormat.INT8, label: '8位整型' },
-    { value: DataFormat.INT16, label: '16位整型' },
-    { value: DataFormat.INT32, label: '32位整型' },
-    { value: DataFormat.INT64, label: '64位整型' },
-    { value: DataFormat.FLOAT, label: '浮点数' },
-    { value: DataFormat.STRING, label: '字符串' },
-    { value: DataFormat.HEX, label: '16进制字符串' },
-    { value: DataFormat.TLV8, label: 'TLV8字符串' },
-    { value: DataFormat.COMBINATION, label: '组合值' },
+    { value: DataFormat.BOOL, label: 'boolean' },
+    { value: DataFormat.UINT8, label: 'unsigned 8-bit integer' },
+    { value: DataFormat.UINT16, label: 'unsigned 16-bit integer' },
+    { value: DataFormat.UINT32, label: 'unsigned 32-bit integer' },
+    { value: DataFormat.INT8, label: 'signed 8-bit integer' },
+    { value: DataFormat.INT16, label: 'signed 16-bit integer' },
+    { value: DataFormat.INT32, label: 'signed 32-bit integer' },
+    { value: DataFormat.INT64, label: 'signed 64-bit integer' },
+    { value: DataFormat.FLOAT, label: 'floating number' },
+    { value: DataFormat.STRING, label: 'string' },
+    { value: DataFormat.HEX, label: 'hex' },
+    { value: DataFormat.TLV8, label: 'tlv8' },
+    { value: DataFormat.COMBINATION, label: 'combination' },
   ];
 
   // 组件内部维护的值

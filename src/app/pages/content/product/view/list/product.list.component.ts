@@ -93,7 +93,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.service.getProducts().subscribe({
       next: data => {
-        this.products = data;
+        this.products = data.filter(x => x.type.v2modified.length > 0);
 
         const newFilters: CategoryFilter[] = [];
         const map: Map<String, String> = new Map<String, String>();

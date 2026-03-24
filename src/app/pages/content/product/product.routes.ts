@@ -8,7 +8,7 @@ export const PRODUCT_ROUTES: Routes = [
     component: ProductComponent
   },
   {
-    path: 'detail/:productId',
+    path: 'detail/:type',
     data: { breadcrumb: '详情' },
     component: ProductDetailComponent
   },

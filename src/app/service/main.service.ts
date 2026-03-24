@@ -329,12 +329,9 @@ export class MainService {
   /**
    * 读取产品功能版本
    */
-  getProductInstance(type: string): Observable<ObjectWithLifecycle<DeviceInstance>> {
-    const params = {
-      type: type,
-    }
+  getProductInstance(type: string): Observable<DeviceInstance> {
     return this.http
-      .get<any>(`${this.server}/v2/product/instance/one`, {params})
-      .pipe(map(response => DeviceInstanceWithLifecycleCodec.decode(response.data)));
+      .get<any>(`${this.server}/miot-spec-v2/instance?type=${type}`)
+      .pipe(map(response => DeviceInstanceCodec.decode(response)));
   }
 }

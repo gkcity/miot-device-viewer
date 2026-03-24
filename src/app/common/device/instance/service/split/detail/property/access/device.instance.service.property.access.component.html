@@ -6,19 +6,19 @@
   <nz-space>
     @if (_value.isReadable) {
       <div *nzSpaceItem>
-        <nz-tag nzColor="green">读</nz-tag>
+        <nz-tag nzColor="green">Readable</nz-tag>
       </div>
     }
 
     @if (_value.isWritable) {
       <div *nzSpaceItem>
-        <nz-tag nzColor="red">写</nz-tag>
+        <nz-tag nzColor="red">Writable</nz-tag>
       </div>
     }
 
     @if (_value.isNotifiable) {
       <div *nzSpaceItem>
-        <nz-tag nzColor="blue">通知</nz-tag>
+        <nz-tag nzColor="blue">Notifiable</nz-tag>
       </div>
     }
   </nz-space>
