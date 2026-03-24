@@ -20,6 +20,7 @@ import {
   ActionDefinition,
   EventDefinition
 } from 'xiot-core-spec-ts';
+import {ServiceType} from 'xiot-core-spec-ts/dist/xiot/core/spec/typedef/definition/urn/ServiceType';
 
 @Component({
   selector: 'spec-service',
@@ -40,20 +41,16 @@ import {
 export class SpecServiceComponent implements OnInit {
 
   loading: boolean = true;
-  total: number = 0;
-  services: ObjectWithLifecycle<ServiceDefinition>[] = [];
-  pageSize = 100;
-  pageIndex = 1;
-  pageSizeOptions = [10, 50, 100, 200, 500];
+  services: ServiceType[] = [];
 
   loadingProperties: boolean = true;
-  properties: Map<string, ObjectWithLifecycle<PropertyDefinition>> = new Map<string, ObjectWithLifecycle<PropertyDefinition>>();
+  properties: Map<string, PropertyType> = new Map<string, PropertyType>();
 
   loadingActions: boolean = true;
-  actions: Map<string, ObjectWithLifecycle<ActionDefinition>> = new Map<string, ObjectWithLifecycle<ActionDefinition>>();
+  actions: Map<string, ActionType> = new Map<string, ActionType>();
 
   loadingEvents: boolean = true;
-  events: Map<string, ObjectWithLifecycle<EventDefinition>> = new Map<string, ObjectWithLifecycle<EventDefinition>>();
+  events: Map<string, EventType> = new Map<string, EventType>();
 
   constructor(
     private service: MainService,
@@ -62,19 +59,15 @@ export class SpecServiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadDataFromServer(this.pageIndex, this.pageSize);
+    this.loadDataFromServer();
   }
 
-  loadDataFromServer(
-    pageIndex: number,
-    pageSize: number,
-  ): void {
+  loadDataFromServer(): void {
     this.loading = true;
-    this.service.getSpecServices(pageIndex, pageSize)
+    this.service.getSpecServices()
       .subscribe({
         next: data => {
-          this.total = data.total;
-          this.services = data.services;
+          this.services = data;
           this.loading = false;
         },
         error: error => {
@@ -83,10 +76,10 @@ export class SpecServiceComponent implements OnInit {
       })
 
     this.loadingProperties = true;
-    this.service.getSpecProperties(1, 200)
+    this.service.getSpecProperties()
       .subscribe({
         next: data => {
-          this.properties = new Map(data.properties.map(item => [item.value.type.name, item]));
+          this.properties = new Map(data.map(item => [item.toString(), item]));
           this.loadingProperties = false;
         },
         error: error => {
@@ -95,10 +88,10 @@ export class SpecServiceComponent implements OnInit {
       })
 
     this.loadingActions = true;
-    this.service.getSpecActions(1, 200)
+    this.service.getSpecActions()
       .subscribe({
         next: data => {
-          this.actions = new Map(data.actions.map(item => [item.value.type.name, item]));
+          this.actions = new Map(data.map(item => [item.toString(), item]));
           this.loadingActions = false;
         },
         error: error => {
@@ -107,10 +100,10 @@ export class SpecServiceComponent implements OnInit {
       })
 
     this.loadingEvents = true;
-    this.service.getSpecEvents(1, 200)
+    this.service.getSpecEvents()
       .subscribe({
         next: data => {
-          this.events = new Map(data.events.map(item => [item.value.type.name, item]));
+          this.events = new Map(data.map(item => [item.toString(), item]));
           this.loadingEvents = false;
         },
         error: error => {
@@ -119,38 +112,32 @@ export class SpecServiceComponent implements OnInit {
       })
   }
 
-  onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
-    const { pageSize, pageIndex } = params;
-    this.loadDataFromServer(pageIndex, pageSize);
-  }
-
-  getPropertyDescription(type: PropertyType): string {
-    const x = this.properties.get(type.name);
-    if (x) {
-      return x.value.description.get('zh-CN') || type.name;
-    } else {
-      return type.name;
-    }
-  }
-
-  getActionDescription(type: ActionType): string {
-    const x = this.actions.get(type.name);
-    if (x) {
-      return x.value.description.get('zh-CN') || type.name;
-    } else {
-      return type.name;
-    }
-  }
-
-  getEventDescription(type: EventType): string {
-    const x = this.events.get(type.name);
-    if (x) {
-      return x.value.description.get('zh-CN') || type.name;
-    } else {
-      return type.name;
-    }
-  }
+  // getPropertyDescription(type: PropertyType): string {
+  //   const x = this.properties.get(type.name);
+  //   if (x) {
+  //     return x.description.get('zh-CN') || x.description.get('en-US')  || type.name;
+  //   } else {
+  //     return type.name;
+  //   }
+  // }
+  //
+  // getActionDescription(type: ActionType): string {
+  //   const x = this.actions.get(type.name);
+  //   if (x) {
+  //     return x.description.get('zh-CN') || x.description.get('en-US')  || type.name;
+  //   } else {
+  //     return type.name;
+  //   }
+  // }
+  //
+  // getEventDescription(type: EventType): string {
+  //   const x = this.events.get(type.name);
+  //   if (x) {
+  //     return x.description.get('zh-CN') || x.description.get('en-US')  || type.name;
+  //   } else {
+  //     return type.name;
+  //   }
+  // }
 
   protected readonly LifeCycle = LifeCycle;
 }

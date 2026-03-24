@@ -2,20 +2,10 @@ import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
-import {SpecDevice} from '../typedef/define/spec/SpecDevice';
-import {SpecDeviceCodec} from '../typedef/codec/spec/SpecDeviceCodec';
 import {SpecUnits} from '../typedef/define/spec/SpecUnits';
 import {SpecUnitsCodec} from '../typedef/codec/spec/SpecUnitsCodec';
 import {SpecFormats} from '../typedef/define/spec/SpecFormats';
 import {SpecFormatsCodec} from '../typedef/codec/spec/SpecFormatsCodec';
-import {SpecProperties} from '../typedef/define/spec/SpecProperties';
-import {SpecPropertiesCodec} from '../typedef/codec/spec/SpecPropertiesCodec';
-import {SpecActions} from '../typedef/define/spec/SpecActions';
-import {SpecActionsCodec} from '../typedef/codec/spec/SpecActionsCodec';
-import {SpecEvents} from '../typedef/define/spec/SpecEvents';
-import {SpecEventsCodec} from '../typedef/codec/spec/SpecEventsCodec';
-import {SpecServices} from '../typedef/define/spec/SpecServices';
-import {SpecServicesCodec} from '../typedef/codec/spec/SpecServicesCodec';
 import {SpecTemplatesCodec} from '../typedef/codec/template/SpecTemplatesCodec';
 import {SpecTemplates} from '../typedef/define/template/SpecTemplates';
 import {
@@ -28,9 +18,17 @@ import {
   Product,
   ProductCodec,
   DeviceInstance,
+  ServiceDefinition, ServiceDefinitionCodec, ActionDefinition, ActionDefinitionCodec, EventDefinition,
+  EventDefinitionCodec, PropertyDefinition, PropertyDefinitionCodec,
+  DeviceTypeCodec,
+  PropertyTypeCodec,
+  PropertyType,
+  ActionType,
+  EventType, ServiceTypeCodec, ActionTypeCodec, EventTypeCodec, DeviceType,
 } from 'xiot-core-spec-ts';
 import {MyProductCodec} from '../typedef/codec/product/MyProductCodec';
 import {MyProduct} from '../typedef/define/product/MyProduct';
+import {ServiceType} from 'xiot-core-spec-ts/dist/xiot/core/spec/typedef/definition/urn/ServiceType';
 
 @Injectable({providedIn: 'root'})
 export class MainService {
@@ -45,54 +43,34 @@ export class MainService {
    * 产品规范
    *------------------------------------------------------------------------------------------------*/
 
-  getSpecDevices(pageNum: number, pageSize: number): Observable<SpecDevice[]> {
-    const params = {
-      pageNum: pageNum,
-      pageSize: pageSize
-    }
+  getSpecDevices(): Observable<DeviceType[]> {
     return this.http
-      .get<any>(`${this.server}/v1/spec/device/list`, {params})
-      .pipe(map(response => SpecDeviceCodec.decodeArray(response.data.datalist)));
+      .get<any>(`${this.server}/miot-spec-v2/spec/devices`)
+      .pipe(map(response => DeviceTypeCodec.decodeArray(response.types)));
   }
 
-  getSpecServices(pageNum: number, pageSize: number): Observable<SpecServices> {
-    const params = {
-      pageNum: pageNum,
-      pageSize: pageSize
-    }
+  getSpecServices(): Observable<ServiceType[]> {
     return this.http
-      .get<any>(`${this.server}/v1/spec/service/list`, {params})
-      .pipe(map(response => SpecServicesCodec.decode(response.data)));
+      .get<any>(`${this.server}/miot-spec-v2/spec/services`)
+      .pipe(map(response => ServiceTypeCodec.decodeArray(response.types)));
   }
 
-  getSpecActions(pageNum: number, pageSize: number): Observable<SpecActions> {
-    const params = {
-      pageNum: pageNum,
-      pageSize: pageSize
-    }
+  getSpecActions(): Observable<ActionType[]> {
     return this.http
-      .get<any>(`${this.server}/v1/spec/action/list`, {params})
-      .pipe(map(response => SpecActionsCodec.decode(response.data)));
+      .get<any>(`${this.server}/miot-spec-v2/spec/actions`)
+      .pipe(map(response => ActionTypeCodec.decodeArray(response.types)));
   }
 
-  getSpecEvents(pageNum: number, pageSize: number): Observable<SpecEvents> {
-    const params = {
-      pageNum: pageNum,
-      pageSize: pageSize
-    }
+  getSpecEvents(): Observable<EventType[]> {
     return this.http
-      .get<any>(`${this.server}/v1/spec/event/list`, {params})
-      .pipe(map(response => SpecEventsCodec.decode(response.data)));
+      .get<any>(`${this.server}/miot-spec-v2/spec/events`)
+      .pipe(map(response => EventTypeCodec.decodeArray(response.types)));
   }
 
-  getSpecProperties(pageNum: number, pageSize: number): Observable<SpecProperties> {
-    const params = {
-      pageNum: pageNum,
-      pageSize: pageSize
-    }
-    return this.http
-      .get<any>(`${this.server}/v1/spec/property/list`, {params})
-      .pipe(map(response => SpecPropertiesCodec.decode(response.data)));
+  getSpecProperties(): Observable<PropertyType[]> {
+   return this.http
+      .get<any>(`${this.server}/miot-spec-v2/spec/properties`)
+      .pipe(map(response => PropertyTypeCodec.decodeArray(response.types)));
   }
 
   getSpecFormats(pageNum: number, pageSize: number): Observable<SpecFormats> {

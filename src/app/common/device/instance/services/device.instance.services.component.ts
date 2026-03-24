@@ -9,7 +9,6 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
-import {CreateServiceComponent} from '../dialog/create/service/create.service.component';
 import {ServiceType} from 'xiot-core-spec-ts/dist/xiot/core/spec/typedef/definition/urn/ServiceType';
 
 @Component({
@@ -71,31 +70,31 @@ export class DeviceInstanceServicesComponent {
     const description = new Map<string, string>();
     description.set('zh-CN', '自定义功能');
 
-    const modal = this.modal.create<CreateServiceComponent, Service, Service>({
-      nzTitle: '添加功能',
-      nzWidth: 1000,
-      nzContent: CreateServiceComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzData: new Service(siid, type, description, [], [], []),
-      nzFooter: [
-        {
-          label: '取消',
-          onClick: component => component!.cancel()
-        },
-        {
-          label: '确认',
-          danger: true,
-          type: 'primary',
-          onClick: component => component!.ok()
-        }
-      ],
-    });
-
-    modal.afterClose.subscribe(result => {
-      if (result) {
-        this.addService(result);
-      }
-    });
+    // const modal = this.modal.create<CreateServiceComponent, Service, Service>({
+    //   nzTitle: '添加功能',
+    //   nzWidth: 1000,
+    //   nzContent: CreateServiceComponent,
+    //   nzViewContainerRef: this.viewContainerRef,
+    //   nzData: new Service(siid, type, description, [], [], []),
+    //   nzFooter: [
+    //     {
+    //       label: '取消',
+    //       onClick: component => component!.cancel()
+    //     },
+    //     {
+    //       label: '确认',
+    //       danger: true,
+    //       type: 'primary',
+    //       onClick: component => component!.ok()
+    //     }
+    //   ],
+    // });
+    //
+    // modal.afterClose.subscribe(result => {
+    //   if (result) {
+    //     this.addService(result);
+    //   }
+    // });
   }
 
   private addService(service: Service) {

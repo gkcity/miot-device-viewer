@@ -8,9 +8,6 @@ import {NzSpaceModule} from 'ng-zorro-antd/space';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {CreatePropertyComponent} from '../../../dialog/create/property/create.property.component';
-import {CreateActionComponent} from '../../../dialog/create/action/create.action.component';
-import {CreateEventComponent} from '../../../dialog/create/event/create.event.component';
 import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {DataFormat} from 'xiot-core-spec-ts/dist/xiot/core/spec/typedef/definition/property/data/DataFormat';
 import {Access} from 'xiot-core-spec-ts/dist/xiot/core/spec/typedef/definition/property/Access';
@@ -94,31 +91,31 @@ export class DeviceInstanceServiceMenuComponent {
     const constraintValue = null;
     const unit = null;
 
-    const modal = this.modal.create<CreatePropertyComponent, Property, Property>({
-      nzTitle: '添加属性',
-      nzWidth: 1000,
-      nzContent: CreatePropertyComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzData: new Property(iid, type, description, format, access, constraintValue, unit),
-      nzFooter: [
-        {
-          label: '取消',
-          onClick: component => component!.cancel()
-        },
-        {
-          label: '确认',
-          danger: true,
-          type: 'primary',
-          onClick: component => component!.ok()
-        }
-      ],
-    });
-
-    modal.afterClose.subscribe(result => {
-      if (result) {
-        this.addProperty(result);
-      }
-    });
+    // const modal = this.modal.create<CreatePropertyComponent, Property, Property>({
+    //   nzTitle: '添加属性',
+    //   nzWidth: 1000,
+    //   nzContent: CreatePropertyComponent,
+    //   nzViewContainerRef: this.viewContainerRef,
+    //   nzData: new Property(iid, type, description, format, access, constraintValue, unit),
+    //   nzFooter: [
+    //     {
+    //       label: '取消',
+    //       onClick: component => component!.cancel()
+    //     },
+    //     {
+    //       label: '确认',
+    //       danger: true,
+    //       type: 'primary',
+    //       onClick: component => component!.ok()
+    //     }
+    //   ],
+    // });
+    //
+    // modal.afterClose.subscribe(result => {
+    //   if (result) {
+    //     this.addProperty(result);
+    //   }
+    // });
   }
 
   onAddAction() {
@@ -141,31 +138,31 @@ export class DeviceInstanceServiceMenuComponent {
     const description = new Map<string, string>();
     description.set('zh-CN', '自定义方法');
 
-    const modal = this.modal.create<CreateActionComponent, Action, Action>({
-      nzTitle: '添加方法',
-      nzWidth: 1000,
-      nzContent: CreateActionComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzData: new Action(iid, type, description, [], []),
-      nzFooter: [
-        {
-          label: '取消',
-          onClick: component => component!.cancel()
-        },
-        {
-          label: '确认',
-          danger: true,
-          type: 'primary',
-          onClick: component => component!.ok()
-        }
-      ],
-    });
-
-    modal.afterClose.subscribe(result => {
-      if (result) {
-        this.addAction(result);
-      }
-    });
+    // const modal = this.modal.create<CreateActionComponent, Action, Action>({
+    //   nzTitle: '添加方法',
+    //   nzWidth: 1000,
+    //   nzContent: CreateActionComponent,
+    //   nzViewContainerRef: this.viewContainerRef,
+    //   nzData: new Action(iid, type, description, [], []),
+    //   nzFooter: [
+    //     {
+    //       label: '取消',
+    //       onClick: component => component!.cancel()
+    //     },
+    //     {
+    //       label: '确认',
+    //       danger: true,
+    //       type: 'primary',
+    //       onClick: component => component!.ok()
+    //     }
+    //   ],
+    // });
+    //
+    // modal.afterClose.subscribe(result => {
+    //   if (result) {
+    //     this.addAction(result);
+    //   }
+    // });
   }
 
   onAddEvent() {
@@ -188,31 +185,31 @@ export class DeviceInstanceServiceMenuComponent {
     const description = new Map<string, string>();
     description.set('zh-CN', '自定义事件');
 
-    const modal = this.modal.create<CreateEventComponent, Event, Event>({
-      nzTitle: '添加事件',
-      nzWidth: 1000,
-      nzContent: CreateEventComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzData: new Event(iid, type, description, []),
-      nzFooter: [
-        {
-          label: '取消',
-          onClick: component => component!.cancel()
-        },
-        {
-          label: '确认',
-          danger: true,
-          type: 'primary',
-          onClick: component => component!.ok()
-        }
-      ],
-    });
-
-    modal.afterClose.subscribe(result => {
-      if (result) {
-        this.addEvent(result);
-      }
-    });
+    // const modal = this.modal.create<CreateEventComponent, Event, Event>({
+    //   nzTitle: '添加事件',
+    //   nzWidth: 1000,
+    //   nzContent: CreateEventComponent,
+    //   nzViewContainerRef: this.viewContainerRef,
+    //   nzData: new Event(iid, type, description, []),
+    //   nzFooter: [
+    //     {
+    //       label: '取消',
+    //       onClick: component => component!.cancel()
+    //     },
+    //     {
+    //       label: '确认',
+    //       danger: true,
+    //       type: 'primary',
+    //       onClick: component => component!.ok()
+    //     }
+    //   ],
+    // });
+    //
+    // modal.afterClose.subscribe(result => {
+    //   if (result) {
+    //     this.addEvent(result);
+    //   }
+    // });
   }
 
   private addProperty(property: Property) {

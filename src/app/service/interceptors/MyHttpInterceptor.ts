@@ -6,6 +6,8 @@ export function MyHttpInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn
     withCredentials: false
   });
 
+  console.log(req.url);
+
   return next(authReq).pipe(
     map((event: HttpEvent<unknown>) => {
       return event;

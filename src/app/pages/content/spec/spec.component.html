@@ -1,5 +1,5 @@
-<nz-page-header nzTitle="产品规范" [nzGhost]="false">
-  <nz-breadcrumb [nzAutoGenerate]="true" nz-page-header-breadcrumb></nz-breadcrumb>
+<nz-page-header nzTitle="Specification" [nzGhost]="false">
+<!--  <nz-breadcrumb [nzAutoGenerate]="true" nz-page-header-breadcrumb></nz-breadcrumb>-->
 
 <!--  <nz-page-header-content>-->
 <!--    <nz-descriptions nzSize="small">-->
@@ -15,13 +15,11 @@
 
   <nz-page-header-footer>
     <nz-tabset [(nzSelectedIndex)]="tabIndex" nzSize="small">
-      <nz-tab nzTitle="设备类型"></nz-tab>
-      <nz-tab nzTitle="功能"></nz-tab>
-      <nz-tab nzTitle="属性"></nz-tab>
-      <nz-tab nzTitle="方法"></nz-tab>
-      <nz-tab nzTitle="事件"></nz-tab>
-      <nz-tab nzTitle="格式"></nz-tab>
-      <nz-tab nzTitle="单位"></nz-tab>
+      <nz-tab nzTitle="Devices"></nz-tab>
+      <nz-tab nzTitle="Services"></nz-tab>
+      <nz-tab nzTitle="Properties"></nz-tab>
+      <nz-tab nzTitle="Actions"></nz-tab>
+      <nz-tab nzTitle="Events"></nz-tab>
     </nz-tabset>
   </nz-page-header-footer>
 </nz-page-header>
@@ -42,12 +40,6 @@
     }
     @case (4) {
       <spec-event></spec-event>
-    }
-    @case (5) {
-      <spec-format></spec-format>
-    }
-    @case (6) {
-      <spec-unit></spec-unit>
     }
   }
 </div>

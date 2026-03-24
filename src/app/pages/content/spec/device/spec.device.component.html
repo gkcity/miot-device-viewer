@@ -1,41 +1,27 @@
 <nz-table
-  nzShowSizeChanger
+  #basicTable
   nzSize="small"
+  nzShowPagination
+  nzShowSizeChanger
   [nzData]="devices"
-  [nzFrontPagination]="false"
-  [nzLoading]="loading"
-  [nzTotal]="total"
-  [(nzPageSize)]="pageSize"
-  [(nzPageIndex)]="pageIndex"
-  (nzQueryParams)="onQueryParamsChange($event)"
+  [nzPageSize]="100"
+  [nzHideOnSinglePage]="false"
 >
   <thead>
   <tr>
-    <th>代码</th>
-    <th>中文描述</th>
-    <th>英文描述</th>
-    <th>状态</th>
+    <th>Namespace</th>
+    <th>UUID</th>
+    <th>Code</th>
+    <th>type</th>
   </tr>
   </thead>
   <tbody>
-    @for (device of devices; track device.uuid) {
+    @for (a of basicTable.data; track a.value) {
       <tr>
-        <td>{{ device.name }}</td>
-        <td>{{ device.description.get('zh-CN') }}</td>
-        <td>{{ device.description.get('en-US') }}</td>
-        <td>
-          @switch (device.lifecycle) {
-            @case (LifeCycle.RELEASED) {
-              <nz-tag nzColor="blue">已发布</nz-tag>
-            }
-            @case (LifeCycle.PREVIEW) {
-              <nz-tag nzColor="yellow">预览</nz-tag>
-            }
-            @case (LifeCycle.DEVELOPMENT) {
-              <nz-tag nzColor="red">开发中</nz-tag>
-            }
-          }
-        </td>
+        <td>{{ a.ns }}</td>
+        <td><nz-tag>{{ a.shortUUID() }}</nz-tag></td>
+        <td>{{ a.name }}</td>
+        <td>{{ a.toString() }}</td>
       </tr>
     }
   </tbody>

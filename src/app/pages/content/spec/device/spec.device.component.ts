@@ -7,10 +7,9 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {NzTabsModule} from 'ng-zorro-antd/tabs';
 import {MainService} from '../../../../service/main.service';
-import {SpecDevice} from '../../../../typedef/define/spec/SpecDevice';
-import {NzTableModule, NzTableQueryParams} from 'ng-zorro-antd/table';
+import {NzTableModule} from 'ng-zorro-antd/table';
 import {NzTagModule} from 'ng-zorro-antd/tag';
-import {LifeCycle} from 'xiot-core-spec-ts';
+import {DeviceType, LifeCycle} from 'xiot-core-spec-ts';
 
 @Component({
   selector: 'spec-device',
@@ -31,10 +30,7 @@ import {LifeCycle} from 'xiot-core-spec-ts';
 export class SpecDeviceComponent implements OnInit {
 
   loading: boolean = true;
-  total: number = 0;
-  devices: SpecDevice[] = [];
-  pageSize = 100;
-  pageIndex = 1;
+  devices: DeviceType[] = [];
 
   constructor(
     private service: MainService,
@@ -43,31 +39,21 @@ export class SpecDeviceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadDataFromServer(this.pageIndex, this.pageSize);
+    this.loadDataFromServer();
   }
 
-  loadDataFromServer(
-    pageIndex: number,
-    pageSize: number,
-  ): void {
+  loadDataFromServer(): void {
     this.loading = true;
-    this.service.getSpecDevices(pageIndex, pageSize)
+    this.service.getSpecDevices()
       .subscribe({
         next: data => {
           this.devices = data;
           this.loading = false;
-          this.total = this.devices.length;
         },
         error: error => {
           this.msg.warning('Failed to getSpecDevices: ', error);
         }
       })
-  }
-
-  onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
-    const { pageSize, pageIndex } = params;
-    this.loadDataFromServer(pageIndex, pageSize);
   }
 
   protected readonly LifeCycle = LifeCycle;
