@@ -260,4 +260,15 @@ export class DeviceInstanceServiceMenuComponent {
         return 'magenta';
     }
   }
+
+  protected getServiceTitle(service: Service): string {
+    const title = service.description.get(this.language);
+    if (title) {
+      if (title.length > 0) {
+        return title;
+      }
+    }
+
+    return service.type.name;
+  }
 }

@@ -16,7 +16,10 @@
     @for (s of services; track s.iid) {
       <li nz-menu-item (click)="onClickService(s)">
         <nz-tag [nzColor]="'blue'">{{ s.iid }}</nz-tag>
-        <span class="service-title">{{ s.description.get(language) }}</span>
+        <span class="service-title">
+          {{ s.description.get(language) || s.type.name }}
+<!--          {{ s.description.get(language) }}-->
+        </span>
         @if (version) {
           <span style="float: right">
             <nz-tag [nzColor]="getVersionColor(s.type.version)">{{ s.type.version }}</nz-tag>
