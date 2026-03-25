@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import {NzPageHeaderModule} from 'ng-zorro-antd/page-header';
 import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
@@ -16,6 +16,9 @@ import {MainService} from '../../../../service/main.service';
 import {NzSpaceModule} from 'ng-zorro-antd/space';
 import {NzTagModule} from 'ng-zorro-antd/tag';
 import {ProductInstanceComponent} from './instance/product.instance.component';
+import {JsonViewerComponent} from '../../../../common/device/instance/dialog/view/json/json.viewer.component';
+import {JsonData} from '../../../../common/device/instance/dialog/view/json/JsonData';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'product-detail',
@@ -38,6 +41,9 @@ import {ProductInstanceComponent} from './instance/product.instance.component';
     ProductInstanceComponent,
     FormsModule,
   ],
+  providers: [
+    NzModalService
+  ]
 })
 export class ProductDetailComponent implements OnInit {
 
@@ -47,6 +53,8 @@ export class ProductDetailComponent implements OnInit {
   version: boolean = false;
 
   constructor(
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef,
     private route: ActivatedRoute,
     private msg: NzMessageService,
     private router: Router,
@@ -76,6 +84,28 @@ export class ProductDetailComponent implements OnInit {
 
   protected onBack() {
     this.router.navigate(['/main/product']).then(() => {});
+  }
+
+  protected onView() {
+    if (this.instance) {
+      const data = DeviceInstanceCodec.encode(this.instance);
+
+      this.modal.create<JsonViewerComponent, JsonData, void>({
+        nzTitle: 'JSON',
+        nzWidth: 800,
+        nzContent: JsonViewerComponent,
+        nzViewContainerRef: this.viewContainerRef,
+        nzData: new JsonData(data),
+        nzFooter: [
+          {
+            label: 'Close',
+            type: 'primary',
+            onClick: component => component!.ok()
+          }
+        ],
+        nzDraggable: true,
+      });
+    }
   }
 
   protected onDownload() {
