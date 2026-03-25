@@ -76,6 +76,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ]
   statusFilterFn: NzTableFilterFn<MyProduct> = (list: string[], a: MyProduct) => list.some(name => a.status.includes(name));
 
+  versionSortFn: NzTableSortFn<MyProduct> = (a: MyProduct, b: MyProduct): number => a.version - b.version;
+
   constructor(
     private service: MainService,
     private msg: NzMessageService,

@@ -3,6 +3,7 @@
     @if (device) {
       <device-instance
         [device]="device"
+        [version]="version"
         [language]="language"
         [lifecycle]="LifeCycle.RELEASED"
         (changed)="onChanged($event)"

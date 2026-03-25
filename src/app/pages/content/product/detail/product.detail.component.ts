@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NzPageHeaderModule} from 'ng-zorro-antd/page-header';
 import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {NzButtonModule} from 'ng-zorro-antd/button';
@@ -36,6 +36,7 @@ import {ProductInstanceComponent} from './instance/product.instance.component';
     NzSpaceModule,
     NzTagModule,
     ProductInstanceComponent,
+    FormsModule,
   ],
 })
 export class ProductDetailComponent implements OnInit {
@@ -43,6 +44,7 @@ export class ProductDetailComponent implements OnInit {
   loading: boolean = true;
   type: string = '';
   instance!: DeviceInstance;
+  version: boolean = false;
 
   constructor(
     private route: ActivatedRoute,

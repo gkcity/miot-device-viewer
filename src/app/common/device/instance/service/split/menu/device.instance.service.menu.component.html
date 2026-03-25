@@ -16,7 +16,9 @@
               <nz-tag [nzColor]="'blue'">{{ p.iid }}</nz-tag>
               <span class="menu-item">{{ p.description.get(language) }}</span>
               @if (version) {
-                <span style="float: right"><nz-tag nzColor="blue">Version {{ p.type.version }}</nz-tag></span>
+                <span style="float: right">
+                  <nz-tag [nzColor]="getVersionColor(p.type.version)">{{ p.type.version }}</nz-tag>
+                </span>
               }
             </li>
           }
@@ -32,7 +34,9 @@
               <nz-tag [nzColor]="'blue'">{{ a.iid }}</nz-tag>
               <span class="menu-item">{{ a.description.get(language) }}</span>
               @if (version) {
-                <span style="float: right"><nz-tag nzColor="blue">Version {{ a.type.version }}</nz-tag></span>
+                <span style="float: right">
+                  <nz-tag [nzColor]="getVersionColor(a.type.version)">{{ a.type.version }}</nz-tag>
+                </span>
               }
             </li>
           }
@@ -48,7 +52,9 @@
               <nz-tag [nzColor]="'blue'">{{ e.iid }}</nz-tag>
               <span class="menu-item">{{ e.description.get(language) }}</span>
               @if (version) {
-                <span style="float: right"><nz-tag nzColor="blue">Version {{ e.type.version }}</nz-tag></span>
+                <span style="float: right">
+                  <nz-tag [nzColor]="getVersionColor(e.type.version)">{{ e.type.version }}</nz-tag>
+                </span>
               }
             </li>
           }

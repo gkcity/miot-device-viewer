@@ -226,4 +226,38 @@ export class DeviceInstanceServiceMenuComponent {
     this.service?.events.set(event.iid, event);
     this.changed.emit(this.service);
   }
+
+  protected getVersionColor(v: number): string {
+    switch (v) {
+      case 1:
+        return 'pink';
+
+      case 2:
+        return 'red';
+
+      case 3:
+        return 'yellow';
+
+      case 4:
+        return 'orange';
+
+      case 5:
+        return 'cyan';
+
+      case 6:
+        return 'green';
+
+      case 7:
+        return 'blue';
+
+      case 8:
+        return 'purple';
+
+      case 9:
+        return 'geekblue';
+
+      default:
+        return 'magenta';
+    }
+  }
 }

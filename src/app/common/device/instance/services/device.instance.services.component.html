@@ -7,8 +7,8 @@
 
     @if (lifecycle === LifeCycle.DEVELOPMENT) {
       <span style="float: right">
-          <button nz-button nzType="primary" nzSize="small" (click)="onAddService()">add</button>
-        </span>
+        <button nz-button nzType="primary" nzSize="small" (click)="onAddService()">add</button>
+      </span>
     }
   </div>
 
@@ -18,7 +18,9 @@
         <nz-tag [nzColor]="'blue'">{{ s.iid }}</nz-tag>
         <span class="service-title">{{ s.description.get(language) }}</span>
         @if (version) {
-          <span style="float: right"><nz-tag nzColor="blue">Version {{ s.type.version }}</nz-tag></span>
+          <span style="float: right">
+            <nz-tag [nzColor]="getVersionColor(s.type.version)">{{ s.type.version }}</nz-tag>
+          </span>
         }
       </li>
     }

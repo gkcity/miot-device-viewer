@@ -37,6 +37,7 @@ import {NzSpinModule} from 'ng-zorro-antd/spin';
 export class ProductInstanceComponent implements OnChanges {
 
   @Input() device: DeviceInstance | undefined = undefined;
+  @Input() version: boolean = false;
   @Output() changed = new EventEmitter<DeviceInstance>();
   @Output() removed = new EventEmitter<Service>();
 

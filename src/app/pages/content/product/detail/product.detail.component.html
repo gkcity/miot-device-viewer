@@ -2,7 +2,15 @@
   <nz-page-header (nzBack)="onBack()" nzBackIcon [nzTitle]="productTitle" [nzSubtitle]="productModel" [nzGhost]="false" class="fixed-header">
 
     <nz-page-header-extra>
-      <button nz-button nzType="primary" (click)="onDownload()">Download</button>
+      <nz-space>
+        <div *nzSpaceItem>
+          <label nz-checkbox [(ngModel)]="version">Show Version</label>
+        </div>
+
+        <div *nzSpaceItem>
+          <button nz-button nzType="primary" (click)="onDownload()">Download</button>
+        </div>
+      </nz-space>
     </nz-page-header-extra>
   </nz-page-header>
 
@@ -20,7 +28,7 @@
 
   <div style="padding: 20px 20px; margin-top: 64px;">
     @if (instance) {
-      <product-instance [device]="instance"></product-instance>
+      <product-instance [device]="instance" [version]="version"></product-instance>
     }
   </div>
 </nz-spin>
