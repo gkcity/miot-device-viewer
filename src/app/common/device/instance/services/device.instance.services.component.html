@@ -17,7 +17,7 @@
       <li nz-menu-item (click)="onClickService(s)">
         <nz-tag [nzColor]="'blue'">{{ s.iid }}</nz-tag>
         <span class="service-title">
-          {{ s.description.get(language) || s.type.name }}
+          {{ s.description.get(language) || s.type.name.toUpperCase() }}
 <!--          {{ s.description.get(language) }}-->
         </span>
         @if (version) {

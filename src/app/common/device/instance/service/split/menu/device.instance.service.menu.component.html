@@ -6,7 +6,7 @@
         <nz-space>
           <span *nzSpaceItem><span nz-icon nzType="database" nzTheme="outline"></span></span>
           <span *nzSpaceItem class="menu-title">
-            {{ service.description.get(language) || service.type.name }}
+            {{ service.description.get(language) || service.type.name.toUpperCase() }}
           </span>
         </nz-space>
       </li>
@@ -17,7 +17,7 @@
             <li nz-menu-item (click)="onClickProperty(p)">
               <nz-tag [nzColor]="'blue'">{{ p.iid }}</nz-tag>
               <span class="menu-item">
-                {{ p.description.get(language) || p.type.name }}
+                {{ p.description.get(language) || p.type.name.toUpperCase() }}
               </span>
               @if (version) {
                 <span style="float: right">
@@ -37,7 +37,7 @@
             <li nz-menu-item (click)="onClickAction(a)">
               <nz-tag [nzColor]="'blue'">{{ a.iid }}</nz-tag>
               <span class="menu-item">
-                {{ a.description.get(language) || a.type.name }}
+                {{ a.description.get(language) || a.type.name.toUpperCase() }}
               </span>
               @if (version) {
                 <span style="float: right">
@@ -56,7 +56,9 @@
           @for (e of service.getEvents(); track e.iid) {
             <li nz-menu-item (click)="onClickEvent(e)">
               <nz-tag [nzColor]="'blue'">{{ e.iid }}</nz-tag>
-              <span class="menu-item">{{ e.description.get(language) }}</span>
+              <span class="menu-item">
+                {{ e.description.get(language) || e.type.name.toUpperCase() }}
+              </span>
               @if (version) {
                 <span style="float: right">
                   <nz-tag [nzColor]="getVersionColor(e.type.version)">{{ e.type.version }}</nz-tag>
